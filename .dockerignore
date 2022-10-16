@@ -1,0 +1,9 @@
+.git/
+coverage/
+__test__/
+node_modules/
+.gitignore
+.gitlab-ci
+yarn.lock
+Dockerfile
+README.md

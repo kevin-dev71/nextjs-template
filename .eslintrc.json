@@ -1,3 +1,169 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "next/core-web-vitals",
+    "prettier",
+    "next",
+    "plugin:jsx-a11y/recommended",
+    "plugin:sonarjs/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "sonarjs",
+    "@typescript-eslint",
+    "simple-import-sort",
+    "testing-library",
+    "jsx-a11y"
+  ],
+  "rules": {
+    "testing-library/await-async-query": "error",
+    "testing-library/no-await-sync-query": "error",
+    "testing-library/no-debugging-utils": "warn",
+    "testing-library/no-dom-import": "off",
+    "import/prefer-default-export": "off",
+    "arrow-body-style": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/no-anonymous-default-export": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": ["arrow-function"],
+        "unnamedComponents": ["arrow-function"]
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ],
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "@next/next/no-img-element": "off",
+    "no-anonymous-default-export": "off",
+    "no-else-return": "error",
+    "no-constant-condition": "warn",
+    "no-useless-return": "error",
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": false,
+        "variables": false,
+        "allowNamedExports": false
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "require-jsdoc": "off",
+    "react/require-default-props": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react/self-closing-comp": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_",
+        "varsIgnorePattern": "_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error", { "hoist": "all" }],
+    "semi": [2, "never"],
+    "max-len": [
+      "warn",
+      {
+        "code": 100,
+        "tabWidth": 2,
+        "comments": 80,
+        "ignoreComments": true,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.ts", "**/*.tsx"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              // `react` first, `next` second, then packages starting with a character
+              ["^react$", "^next", "^[a-z]"],
+              // Packages starting with `@`
+              ["^@"],
+              // Packages starting with `@/src`
+              ["^(@|src)(/.*|$)"],
+              // Packages starting with `~`
+              ["^~"],
+              // Imports starting with `../`
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Imports starting with `./`
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+              // Side effect imports
+              ["^\\u0000"],
+              // Style imports
+              ["^.+\\.s?css$"]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+      "extends": ["plugin:testing-library/react"]
+    },
+    { "files": ["src/**/*.slice.ts"], "rules": { "no-param-reassign": "off" } }
+  ]
 }
