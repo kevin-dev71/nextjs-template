@@ -10,7 +10,8 @@
     "prettier",
     "next",
     "plugin:jsx-a11y/recommended",
-    "plugin:sonarjs/recommended"
+    "plugin:sonarjs/recommended",
+    "standard-react"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -29,12 +30,14 @@
     "jsx-a11y"
   ],
   "rules": {
+    "no-unused-expressions": "error",
     "testing-library/await-async-query": "error",
     "testing-library/no-await-sync-query": "error",
     "testing-library/no-debugging-utils": "warn",
     "testing-library/no-dom-import": "off",
     "import/prefer-default-export": "off",
     "arrow-body-style": 0,
+    "quotes": [2, "double", { "avoidEscape": true }],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -84,15 +87,6 @@
     "no-else-return": "error",
     "no-constant-condition": "warn",
     "no-useless-return": "error",
-    "no-use-before-define": [
-      "error",
-      {
-        "functions": false,
-        "classes": false,
-        "variables": false,
-        "allowNamedExports": false
-      }
-    ],
     "react/jsx-props-no-spreading": "off",
     "require-jsdoc": "off",
     "react/require-default-props": "off",
@@ -118,7 +112,7 @@
     "max-len": [
       "warn",
       {
-        "code": 100,
+        "code": 120,
         "tabWidth": 2,
         "comments": 80,
         "ignoreComments": true,
@@ -140,13 +134,22 @@
           {
             "groups": [
               // `react` first, `next` second, then packages starting with a character
-              ["^react$", "^next", "^[a-z]"],
-              // Packages starting with `@`
-              ["^@"],
-              // Packages starting with `@/src`
-              ["^(@|src)(/.*|$)"],
+              ["^react$", "^next", "^[a-z]", "^@headlessui", "^@reduxjs"],
+              // // Packages starting with `@`
+              // ["^@"],
+              // // Packages starting with `@/src`
+              // ["^(@|src)(/.*|$)"],
+
+              // // Packages starting with `@/src` and doesnot end with .scss
+              ["^(@(?!.*\\.scss$)|@/src)"],
               // Packages starting with `~`
               ["^~"],
+              // shared components
+              ["^@(/.*)(shared)(/.*)"],
+              // services
+              ["^@(/.*)(service|services)(/.*)"],
+              // hooks
+              ["^@(/.*)(hooks)(/.*)"],
               // Imports starting with `../`
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
               // Imports starting with `./`
@@ -154,14 +157,16 @@
               // Side effect imports
               ["^\\u0000"],
               // Style imports
-              ["^.+\\.s?css$"]
+              ["^(@|.)+\\.s?css$"],
+              // typescript interfaces
+              ["^@(/.*)(interfaces|interface)(/.*)"]
             ]
           }
         ]
       }
     },
     {
-      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+      "files": ["**/__test__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
       "extends": ["plugin:testing-library/react"]
     },
     { "files": ["src/**/*.slice.ts"], "rules": { "no-param-reassign": "off" } }
